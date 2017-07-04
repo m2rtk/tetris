@@ -5,21 +5,24 @@ import java.util.List;
 
 public class Grid {
     private Cell[][] grid;
+    private List<Cell> cells;
 
     public Grid(int height, int width) {
         this.grid = new Cell[height][width];
+        this.cells = new ArrayList<>();
     }
 
     public Cell get(int x, int y) {
+        if (y < 0 || x < 0) return null;
         return grid[y][x];
     }
 
-    public void deleteLine(int y) {
+    private void deleteLine(int y) {
         for (; y > 0; y--) grid[y] = grid[y - 1];
         grid[0] = new Cell[getWidth()];
     }
 
-    public boolean isFull(int y) {
+    private boolean isFull(int y) {
         for (int x = 0; x < getWidth(); x++)
             if (grid[y][x] == null || grid[y][x].isAlive())
                 return false;
@@ -27,24 +30,33 @@ public class Grid {
         return true;
     }
 
-    public void checkLines() {
+    public int checkLines() {
+        int c = 0;
         for (int y = 0; y < getHeight(); y++) {
-            if (isFull(y)) deleteLine(y);
+            if (isFull(y)) {
+                deleteLine(y);
+                c++;
+            }
         }
+        return c;
     }
 
     public void add(Block block) {
-        for (Cell cell : block.getCells()) {
-            if (cell.getY() > -1) {
-                grid[cell.getY()][cell.getX()] = cell;
-            }
-        }
+        block.getCells().stream().filter(cell -> cell.getY() > -1).forEach(this::add);
+    }
+
+    private void add(Cell cell) {
+        cells.add(cell);
+        grid[cell.getY()][cell.getX()] = cell;
     }
 
     public void remove(Block block) {
-        for (Cell cell : block.getCells()) {
-            if (cell.getY() > -1) grid[cell.getY()][cell.getX()] = null;
-        }
+        block.getCells().stream().filter(cell -> cell.getY() > -1).forEach(this::remove);
+    }
+
+    private void remove(Cell cell) {
+        cells.remove(cell);
+        grid[cell.getY()][cell.getX()] = null;
     }
 
     public int getHeight() {
@@ -56,8 +68,6 @@ public class Grid {
     }
 
     public List<Cell> getCells() {
-        List<Cell> cells = new ArrayList<>();
-        for (int x = 0; x < getWidth(); x++) for (int y = 0; y < getHeight(); y++) cells.add(grid[y][x]);
         return cells;
     }
 }

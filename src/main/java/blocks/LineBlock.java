@@ -11,7 +11,6 @@ public class LineBlock extends Block {
     private static int v = 2;
 
     public LineBlock() {
-        state = 0;
         cells = Arrays.asList(
                     Arrays.asList(
                         new Cell(0,-4,v),
@@ -20,8 +19,13 @@ public class LineBlock extends Block {
                         new Cell(0,-1,v)
                     ),
                     Arrays.asList(
-                        new Cell(0, -1, v), new Cell(1, -1, v),new Cell(2, -1, v),new Cell(3, -1, v)
+                        new Cell(-1, -1, v), new Cell(0, -1, v),new Cell(1, -1, v),new Cell(2, -1, v)
                     )
         );
+    }
+
+    @Override
+    public int getId() {
+        return 2;
     }
 }

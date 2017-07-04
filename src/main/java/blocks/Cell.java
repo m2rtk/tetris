@@ -1,7 +1,7 @@
 package blocks;
 
 public class Cell {
-    private int x,y;
+    private int x, y;
     private boolean alive;
     private int value;
 

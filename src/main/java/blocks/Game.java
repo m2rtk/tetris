@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Game {
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
     private Grid grid;
     private List<Class> blocks;
 
@@ -20,7 +20,7 @@ public class Game {
 
     public Game(Grid grid) {
         this.grid = grid;
-        this.blocks = Arrays.asList(BlockBlock.class, LineBlock.class);
+        this.blocks = Arrays.asList(BlockBlock.class, LineBlock.class, LLBlock.class, RLBlock.class, SBlock.class, TBlock.class, ZBlock.class);
         this.state = State.NEW;
     }
 

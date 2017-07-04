@@ -5,15 +5,8 @@ import java.util.Scanner;
 
 public class ConsoleLoop {
     public static void main(String[] args) {
-        Grid grid = new Grid(6,5);
-        Game game = new  Game(grid);
-//        for (int i = 0; i < 16; i++) {
-//            System.out.println(i);
-//            if (i == 12) game.moveRight();
-//            if (i == 12) game.moveRight();
-//            print(grid);
-//            game.update();
-//        }
+        Grid grid = new Grid(10,10);
+        Game game = new Game(grid);
         Scanner in = new Scanner(System.in);
         while (true) {
             switch (in.nextLine()) {
@@ -29,6 +22,8 @@ public class ConsoleLoop {
                 case "w":
                     game.rotate();
                     break;
+                case "q":
+                    return;
             }
             print(grid);
         }
