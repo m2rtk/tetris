@@ -6,11 +6,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class GUI extends Application {
-    private final static int w = 10, h = 18, r = 20, o = 20;
+    private final static int w = 5, h = 18, r = 20, o = 20;
     private Canvas canvas;
     private Grid grid;
     private Tetris tetris;
@@ -74,7 +76,7 @@ public class GUI extends Application {
         for (int x = 0; x < grid.getHeight(); x++) {
             for (int y = 0; y < grid.getWidth(); y++) {
                 if (grid.get(y, x) == null) canvas.getGraphicsContext2D().setFill(Color.WHITE);
-                else canvas.getGraphicsContext2D().setFill(Color.RED);
+                else canvas.getGraphicsContext2D().setFill(getPrimaryColor(grid.get(y,x).getValue()));
 
                 canvas.getGraphicsContext2D().fillRect(y*r, x*r, r, r);
             }
@@ -83,4 +85,29 @@ public class GUI extends Application {
         canvas.getGraphicsContext2D().fillText(String.valueOf(tetris.getScore()), 10, 10);
     }
 
+    private static Color getPrimaryColor(int i) {
+        List<Color> color = Arrays.asList(
+                Color.BLUE,
+                Color.RED,
+                Color.ORANGE,
+                Color.GREEN,
+                Color.CYAN,
+                Color.PURPLE,
+                Color.YELLOWGREEN
+        );
+        return color.get(i % color.size());
+    }
+
+    private static Color getSecondaryColor(int i) {
+        List<Color> color = Arrays.asList(
+                Color.LIGHTBLUE,
+                Color.INDIANRED,
+                Color.LIGHTGOLDENRODYELLOW,
+                Color.LIGHTGREEN,
+                Color.LIGHTCYAN,
+                Color.MEDIUMPURPLE,
+                Color.GREENYELLOW
+        );
+        return color.get(i % color.size());
+    }
 }
