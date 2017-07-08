@@ -10,7 +10,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GUI extends Application {
-    private final static int w = 10, h = 18, r = 20;
+    private final static int w = 10, h = 18, r = 20, o = 20;
     private Canvas canvas;
     private Grid grid;
     private Tetris tetris;
@@ -56,6 +56,8 @@ public class GUI extends Application {
             }
         });
 
+
+        int t  = 1000;
         Timer timer = new Timer();
         TimerTask task = new TimerTask(){
             public void run() {
@@ -65,8 +67,7 @@ public class GUI extends Application {
                 paint();
             }
         };
-
-        timer.schedule(task, 0, 1000);
+        timer.schedule(task, 0, t);
     }
 
     private void paint() {
@@ -78,6 +79,8 @@ public class GUI extends Application {
                 canvas.getGraphicsContext2D().fillRect(y*r, x*r, r, r);
             }
         }
+        canvas.getGraphicsContext2D().setFill(Color.BLACK);
+        canvas.getGraphicsContext2D().fillText(String.valueOf(tetris.getScore()), 10, 10);
     }
 
 }
