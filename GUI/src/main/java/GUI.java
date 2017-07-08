@@ -12,7 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GUI extends Application {
-    private final static int w = 5, h = 18, r = 20, o = 20;
+    private final static int w = 10, h = 18, r = 20, o = 20;
     private Canvas canvas;
     private Grid grid;
     private Tetris tetris;
