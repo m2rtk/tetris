@@ -16,26 +16,29 @@ public class Tetris {
     private Grid grid;
     private Block block;
 
-
     public Tetris(Grid grid) {
         this.grid  = grid;
         this.score = 0;
         setNextBlock();
     }
 
-    public void update() {
+    public boolean update() {
         if (block.canMoveDown(grid)) {
             block.moveDown(grid);
         } else {
             block.kill();
             score += grid.checkLines();
             setNextBlock();
+            if (!block.canMoveDown(grid)) return false;
         }
+        return true;
     }
 
     private void setNextBlock() {
         block = construct(blocks.get(rand.nextInt(blocks.size())));
         grid.add(block);
+        block.moveDown(grid);
+        for (int i = 0; i < -2 + grid.getWidth() / 2; i++) block.moveRight(grid); // A+
     }
 
     public void moveRight() {
@@ -54,6 +57,13 @@ public class Tetris {
         if (block.canRotate(grid)) {
             block.rotate(grid);
         }
+    }
+
+    public void down() {
+        while (block.canMoveDown(grid)) {
+            block.moveDown(grid);
+        }
+        update();
     }
 
     public int getScore() {

@@ -8,7 +8,7 @@ public class CLI {
         try {
             grid = new Grid(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
         } catch (Exception e) {
-            grid = new Grid(10, 10);
+            grid = new Grid(10, 18);
         }
 
         Tetris tetris = new Tetris(grid);
