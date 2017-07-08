@@ -28,11 +28,6 @@ public class Cell {
         return y;
     }
 
-    public void set(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
     public int getValue() {
         return value;
     }

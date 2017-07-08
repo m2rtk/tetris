@@ -7,7 +7,6 @@ public abstract class Block {
     private int state = 0;
 
     public void moveDown(Grid grid) {
-        for (Cell cell : getCells()) if (!cell.canMoveDown(grid)) return;
         grid.remove(this);
 
         for (int i = 0; i < cells.size(); i++)
@@ -17,8 +16,12 @@ public abstract class Block {
         grid.add(this);
     }
 
+    public boolean canMoveDown(Grid grid) {
+        for (Cell cell : getCells()) if (!cell.canMoveDown(grid)) return false;
+        return true;
+    }
+
     public void moveLeft(Grid grid) {
-        for (Cell cell : getCells()) if (!cell.canMoveLeft(grid)) return;
         grid.remove(this);
 
         for (int i = 0; i < cells.size(); i++)
@@ -28,8 +31,12 @@ public abstract class Block {
         grid.add(this);
     }
 
+    public boolean canMoveLeft(Grid grid) {
+        for (Cell cell : getCells()) if (!cell.canMoveLeft(grid)) return false;
+        return true;
+    }
+
     public void moveRight(Grid grid) {
-        for (Cell cell : getCells()) if (!cell.canMoveRight(grid)) return;
         grid.remove(this);
 
         for (int i = 0; i < cells.size(); i++)
@@ -39,24 +46,28 @@ public abstract class Block {
         grid.add(this);
     }
 
+    public boolean canMoveRight(Grid grid) {
+        for (Cell cell : getCells()) if (!cell.canMoveRight(grid)) return false;
+        return true;
+    }
+
     public void rotate(Grid grid) {
-        int newState = (state + 1) % cells.size();
-        for (Cell cell : cells.get(newState)) {
-            // check that new position is in bounds
-            if (cell.getY() >= grid.getHeight() || cell.getX() < 0 || cell.getX() >= grid.getWidth()) return;
-            else {// check that new position doesn't touch other blocks
-
-                Cell gridCell = grid.get(cell.getX(), cell.getY());
-                if (gridCell != null) System.out.println("!gridCell.isAlive() = " + !gridCell.isAlive());
-                if (gridCell != null && !gridCell.isAlive()) return;
-            }
-        }
-
         grid.remove(this);
 
-        state = newState;
+        state = (state + 1) % cells.size();
 
         grid.add(this);
+    }
+
+    public boolean canRotate(Grid grid) {
+        for (Cell cell : cells.get((state + 1) % cells.size())) {
+            if (cell.getY() >= grid.getHeight() || cell.getX() < 0 || cell.getX() >= grid.getWidth()) return false;
+            else {// check that new position doesn't touch other blocks
+                Cell gridCell = grid.get(cell.getX(), cell.getY());
+                if (gridCell != null && !gridCell.isAlive()) return false;
+            }
+        }
+        return true;
     }
 
     public void kill() {
