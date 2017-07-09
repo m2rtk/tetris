@@ -8,9 +8,8 @@
 
     <parent>
         <groupId>tetris</groupId>
-        <artifactId>logic</artifactId>
+        <artifactId>root</artifactId>
         <version>1.0</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <build>
@@ -20,7 +19,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Main</mainClass>
+                            <mainClass>GUI</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

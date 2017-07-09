@@ -4,20 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>CLI</artifactId>
+    <artifactId>logic</artifactId>
 
     <parent>
         <groupId>tetris</groupId>
         <artifactId>root</artifactId>
         <version>1.0</version>
     </parent>
-
-    <dependencies>
-        <dependency>
-            <groupId>tetris</groupId>
-            <artifactId>logic</artifactId>
-            <version>1.0</version>
-        </dependency>
-    </dependencies>
 
 </project>

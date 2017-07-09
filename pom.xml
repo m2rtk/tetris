@@ -5,19 +5,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>tetris</groupId>
-    <artifactId>logic</artifactId>
+    <artifactId>root</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
 
     <modules>
         <module>GUI</module>
         <module>CLI</module>
+        <module>logic</module>
     </modules>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-
 
 </project>
