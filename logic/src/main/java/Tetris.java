@@ -14,7 +14,7 @@ public class Tetris {
 
     private int score;
     private Grid grid;
-    private Block block, nextBlock;
+    private Block block;
 
     public Tetris(Grid grid) {
         this.grid  = grid;
@@ -35,12 +35,10 @@ public class Tetris {
     }
 
     private void setNextBlock() {
-        if (nextBlock == null) nextBlock = construct(blocks.get(rand.nextInt(blocks.size())));
-        block = nextBlock;
+        block = construct(blocks.get(rand.nextInt(blocks.size())));
         grid.add(block);
         block.moveDown(grid);
         for (int i = 0; i < -2 + grid.getWidth() / 2; i++) block.moveRight(grid); // A+
-        nextBlock = construct(blocks.get(rand.nextInt(blocks.size())));
     }
 
     public void moveRight() {
@@ -70,10 +68,6 @@ public class Tetris {
 
     public int getScore() {
         return score;
-    }
-
-    public Block getNextBlock() {
-        return nextBlock;
     }
 
     private static Block construct(Class cls) {
