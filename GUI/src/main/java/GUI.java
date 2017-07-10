@@ -1,10 +1,12 @@
 import blocks.Grid;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -69,6 +71,8 @@ public class GUI extends Application {
             }
         };
         timer.schedule(task, 0, t);
+
+        primaryStage.setOnCloseRequest(we -> timer.cancel());
     }
 
     private void paint() {
