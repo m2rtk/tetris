@@ -58,7 +58,6 @@ public class GUI extends Application {
             }
         });
 
-
         int t  = 1000;
         Timer timer = new Timer();
         TimerTask task = new TimerTask(){
@@ -101,19 +100,6 @@ public class GUI extends Application {
                 Color.CYAN,
                 Color.PURPLE,
                 Color.YELLOWGREEN
-        );
-        return color.get(i % color.size());
-    }
-
-    private static Color getSecondaryColor(int i) {
-        List<Color> color = Arrays.asList(
-                Color.LIGHTBLUE,
-                Color.INDIANRED,
-                Color.LIGHTGOLDENRODYELLOW,
-                Color.LIGHTGREEN,
-                Color.LIGHTCYAN,
-                Color.MEDIUMPURPLE,
-                Color.GREENYELLOW
         );
         return color.get(i % color.size());
     }
