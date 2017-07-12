@@ -5,6 +5,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GUI extends Application {
-    private final static int w = 10, h = 18, r = 20, o = 20, b = 2;
+    private final static int w = 10, h = 18, r = 20, o = 2, b = 2;
     private Canvas canvas;
     private Grid grid;
     private Tetris tetris;
@@ -24,9 +25,9 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         StackPane root = new StackPane();
-        canvas = new Canvas(w*r, h*r);
+        canvas = new Canvas(w*r, h*r+o);
         root.getChildren().add(canvas);
-        Scene scene = new Scene(root, w*r, h*r);
+        Scene scene = new Scene(root, w*r, h*r+o);
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -69,6 +70,8 @@ public class GUI extends Application {
             }
         };
         timer.schedule(task, 0, t);
+
+        primaryStage.setOnCloseRequest(we -> timer.cancel());
     }
 
     private void paint() {
@@ -76,19 +79,21 @@ public class GUI extends Application {
             for (int y = 0; y < grid.getWidth(); y++) {
                 if (grid.get(y, x) == null){
                 	canvas.getGraphicsContext2D().setFill(Color.WHITE);
-					canvas.getGraphicsContext2D().fillRect(y*r, x*r, r, r);
+					canvas.getGraphicsContext2D().fillRect(y*r, x*r+o, r, r);
 				}
                 else {
 					canvas.getGraphicsContext2D().setFill(Color.BLACK);
-					canvas.getGraphicsContext2D().fillRect(y*r, x*r, r, r);
+					canvas.getGraphicsContext2D().fillRect(y*r, x*r+o, r, r);
                 	canvas.getGraphicsContext2D().setFill(getPrimaryColor(grid.get(y,x).getValue()));
-					canvas.getGraphicsContext2D().fillRect(y*r+b, x*r+b, r-2*b, r-2*b);
+					canvas.getGraphicsContext2D().fillRect(y*r+b, x*r+b+o, r-2*b, r-2*b);
 				}
 
             }
         }
+        canvas.getGraphicsContext2D().setFill(getPrimaryColor(tetris.getNextBlock().getId()));
+        canvas.getGraphicsContext2D().fillRect(0,0, grid.getWidth()*r, o);
         canvas.getGraphicsContext2D().setFill(Color.BLACK);
-        canvas.getGraphicsContext2D().fillText(String.valueOf(tetris.getScore()), 10, 10);
+        canvas.getGraphicsContext2D().fillText(String.valueOf(tetris.getScore()), 10, 10 + o);
     }
 
     private static Color getPrimaryColor(int i) {
