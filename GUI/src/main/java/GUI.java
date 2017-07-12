@@ -12,7 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GUI extends Application {
-    private final static int w = 10, h = 18, r = 20, o = 20, b = 2;
+    private final static int w = 10, h = 18, r = 20, o = 20, b = 1, s = 10;
     private Canvas canvas;
     private Grid grid;
     private Tetris tetris;
@@ -72,19 +72,28 @@ public class GUI extends Application {
     }
 
     private void paint() {
+        canvas.getGraphicsContext2D().setFill(Color.LIGHTCYAN);
+        canvas.getGraphicsContext2D().fillRect(0,0,canvas.getWidth(), canvas.getHeight());
+        canvas.getGraphicsContext2D().setStroke(Color.GRAY);
+        for (int y = (-1*(int)canvas.getHeight()); y < canvas.getHeight(); y += s){
+            canvas.getGraphicsContext2D().strokeLine(0, y, canvas.getWidth(), y+canvas.getHeight());
+        }
+        canvas.getGraphicsContext2D().setFill(Color.LIGHTCYAN);
+        canvas.getGraphicsContext2D().fillRect(5, 0, 15, 15);
         for (int x = 0; x < grid.getHeight(); x++) {
             for (int y = 0; y < grid.getWidth(); y++) {
-                if (grid.get(y, x) == null){
-                	canvas.getGraphicsContext2D().setFill(Color.WHITE);
-					canvas.getGraphicsContext2D().fillRect(y*r, x*r, r, r);
-				}
-                else {
-					canvas.getGraphicsContext2D().setFill(Color.BLACK);
-					canvas.getGraphicsContext2D().fillRect(y*r, x*r, r, r);
-                	canvas.getGraphicsContext2D().setFill(getPrimaryColor(grid.get(y,x).getValue()));
-					canvas.getGraphicsContext2D().fillRect(y*r+b, x*r+b, r-2*b, r-2*b);
-				}
-
+                if (grid.get(y, x) != null){
+                    canvas.getGraphicsContext2D().setFill(Color.BLACK);
+                    canvas.getGraphicsContext2D().fillRect(y*r-b, x*r-b, r+2*b, r+2*b);
+                    canvas.getGraphicsContext2D().setFill(getPrimaryColor(grid.get(y,x).getValue()));
+                    canvas.getGraphicsContext2D().fillRect(y*r+b, x*r+b, r-2*b, r-2*b);
+                    canvas.getGraphicsContext2D().setFill(getLightColor(grid.get(y,x).getValue()));
+                    canvas.getGraphicsContext2D().fillRect(y*r+3*b, x*r+b, r-4*b, r-4*b);
+                    canvas.getGraphicsContext2D().setFill(getDarkColor(grid.get(y,x).getValue()));
+                    canvas.getGraphicsContext2D().fillRect(y*r+b, x*r+3*b, r-4*b, r-4*b);
+                    canvas.getGraphicsContext2D().setFill(getPrimaryColor(grid.get(y,x).getValue()));
+                    canvas.getGraphicsContext2D().fillRect(y*r+3*b, x*r+3*b, r-6*b, r-6*b);
+                }
             }
         }
         canvas.getGraphicsContext2D().setFill(Color.BLACK);
@@ -93,13 +102,39 @@ public class GUI extends Application {
 
     private static Color getPrimaryColor(int i) {
         List<Color> color = Arrays.asList(
-                Color.BLUE,
-                Color.RED,
-                Color.ORANGE,
-                Color.GREEN,
-                Color.CYAN,
-                Color.PURPLE,
-                Color.YELLOWGREEN
+                Color.rgb(0,0,255),      //RLBlock
+                Color.rgb(255,0,0),      //BlockBlock
+                Color.rgb(255,102,0),      //LineBlock
+                Color.rgb(0,255,0),      //ZBlock
+                Color.rgb(102,204,255),      //SBlock
+                Color.rgb(255,255,0),      //TBlock
+                Color.rgb(204,0,255)       //LLBlock
+        );
+        return color.get(i % color.size());
+    }
+
+    private static Color getLightColor(int i) {
+        List<Color> color = Arrays.asList(
+                Color.rgb(102,102,255),      //RLBlock
+                Color.rgb(255,102,102),      //BlockBlock
+                Color.rgb(255,153,51),      //LineBlock
+                Color.rgb(102,255,102),      //ZBlock
+                Color.rgb(153,255,255),      //SBlock
+                Color.rgb(255,255,153),      //TBlock
+                Color.rgb(204,102,255)       //LLBlock
+        );
+        return color.get(i % color.size());
+    }
+
+    private static Color getDarkColor(int i) {
+        List<Color> color = Arrays.asList(
+                Color.rgb(0,0,204),      //RLBlock
+                Color.rgb(204,0,0),      //BlockBlock
+                Color.rgb(204,102,0),      //LineBlock
+                Color.rgb(0,204,0),      //ZBlock
+                Color.rgb(51,153,204),      //SBlock
+                Color.rgb(255,204,0),      //TBlock
+                Color.rgb(153,0,204)       //LLBlock
         );
         return color.get(i % color.size());
     }
