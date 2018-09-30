@@ -1,4 +1,4 @@
-package blocks;
+package eu.m2rt.tetris.logic.blocks;
 
 import java.util.ArrayList;
 import java.util.List;

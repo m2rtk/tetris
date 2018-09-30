@@ -1,4 +1,6 @@
-import blocks.*;
+package eu.m2rt.tetris.logic;
+
+import eu.m2rt.tetris.logic.blocks.*;
 
 import java.util.*;
 

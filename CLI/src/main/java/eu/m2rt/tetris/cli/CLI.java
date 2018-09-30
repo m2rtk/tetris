@@ -1,4 +1,7 @@
-import blocks.Grid;
+package eu.m2rt.tetris.cli;
+
+import eu.m2rt.tetris.logic.Tetris;
+import eu.m2rt.tetris.logic.blocks.Grid;
 
 import java.util.Scanner;
 

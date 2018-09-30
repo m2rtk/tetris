@@ -1,5 +1,8 @@
-import blocks.Cell;
-import blocks.Grid;
+package eu.m2rt.tetris.gui;
+
+import eu.m2rt.tetris.logic.Tetris;
+import eu.m2rt.tetris.logic.blocks.Cell;
+import eu.m2rt.tetris.logic.blocks.Grid;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -7,7 +10,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -80,12 +82,7 @@ public class GUI extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.LIGHTCYAN);
         gc.fillRect(0,0,canvas.getWidth(), canvas.getHeight());
-//        gc.setStroke(Color.GRAY);
-//        for (int y = (-1*(int)canvas.getHeight()); y < canvas.getHeight(); y += s){
-//            canvas.getGraphicsContext2D().strokeLine(0, y, canvas.getWidth(), y+canvas.getHeight());
-//        }
-//        gc.setFill(Color.LIGHTCYAN);
-//        gc.fillRect(5, 0, 15, 15);
+
         Cell cell;
         for (int x = 0; x < grid.getHeight(); x++) {
             for (int y = 0; y < grid.getWidth(); y++) {
@@ -94,6 +91,7 @@ public class GUI extends Application {
                 }
             }
         }
+
         gc.setFill(getPrimaryColor(tetris.getNextBlock().getId()));
         gc.fillRect(0,0, grid.getWidth()*r, o);
         gc.setFill(Color.BLACK);

@@ -1,4 +1,4 @@
-package blocks;
+package eu.m2rt.tetris.logic.blocks;
 
 public class Cell {
     private int x, y;
