@@ -1,71 +1,67 @@
 package eu.m2rt.tetris.logic;
 
-import eu.m2rt.tetris.logic.blocks.*;
+import java.util.Random;
 
-import java.util.*;
+import static eu.m2rt.tetris.logic.Direction.*;
 
 public class Tetris {
     private static final Random rand = new Random();
-
-    private static final List<Class> blocks = Arrays.asList(
-            BlockBlock.class, LineBlock.class,
-            LLBlock.class, RLBlock.class,
-            SBlock.class, TBlock.class,
-            ZBlock.class
-    );
+    private final Grid grid;
 
     private int score;
-    private Grid grid;
-    private Block block, nextBlock;
+    private BlockInstance block, nextBlock;
 
     public Tetris(Grid grid) {
-        this.grid  = grid;
+        this.grid = grid;
         this.score = 0;
         setNextBlock();
     }
 
     public boolean update() {
-        if (block.canMoveDown(grid)) {
-            block.moveDown(grid);
+        if (block.canMove(DOWN)) {
+            block.move(DOWN);
         } else {
             block.kill();
             score += grid.checkLines();
             setNextBlock();
-            if (!block.canMoveDown(grid)) return false;
+            if (!block.canMove(DOWN)) return false;
         }
         return true;
     }
 
     private void setNextBlock() {
-        if (nextBlock == null) nextBlock = construct(blocks.get(rand.nextInt(blocks.size())));
+        if (nextBlock == null) {
+            nextBlock = newBlock();
+        }
         block = nextBlock;
         grid.add(block);
-        block.moveDown(grid);
-        for (int i = 0; i < -2 + grid.getWidth() / 2; i++) block.moveRight(grid); // A+
-        nextBlock = construct(blocks.get(rand.nextInt(blocks.size())));
+        for (int i = 0; i < -2 + grid.getWidth() / 2; i++) {
+            block.move(RIGHT); // A+
+        }
+        nextBlock = newBlock();
     }
 
     public void moveRight() {
-        if (block.canMoveRight(grid)) {
-            block.moveRight(grid);
+        if (block.canMove(RIGHT)) {
+            block.move(RIGHT);
         }
     }
 
     public void moveLeft() {
-        if (block.canMoveLeft(grid)) {
-            block.moveLeft(grid);
+        if (block.canMove(LEFT)) {
+            block.move(LEFT);
         }
     }
 
     public void rotate() {
-        if (block.canRotate(grid)) {
-            block.rotate(grid);
+        if (block.canRotate()) {
+            block.rotate();
         }
     }
 
     public void down() {
-        while (block.canMoveDown(grid)) {
-            block.moveDown(grid);
+        while (block.canMove(DOWN)) {
+            block.move(DOWN);
         }
         update();
     }
@@ -74,15 +70,11 @@ public class Tetris {
         return score;
     }
 
-    public Block getNextBlock() {
+    public BlockInstance getNextBlock() {
         return nextBlock;
     }
 
-    private static Block construct(Class cls) {
-        try {
-            return (Block) cls.getDeclaredConstructors()[0].newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException("Dude pls");
-        }
+    private BlockInstance newBlock() {
+        return Block.values()[rand.nextInt(Block.values().length)].instance(grid);
     }
 }

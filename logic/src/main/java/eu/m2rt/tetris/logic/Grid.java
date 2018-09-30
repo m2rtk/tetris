@@ -1,11 +1,11 @@
-package eu.m2rt.tetris.logic.blocks;
+package eu.m2rt.tetris.logic;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Grid {
-    private Cell[][] grid;
-    private List<Cell> cells;
+    private final Cell[][] grid;
+    private final List<Cell> cells;
 
     public Grid(int height, int width) {
         this.grid = new Cell[height][width];
@@ -30,7 +30,7 @@ public class Grid {
         return true;
     }
 
-    public int checkLines() {
+    int checkLines() {
         int c = 0;
         for (int y = 0; y < getHeight(); y++) {
             if (isFull(y)) {
@@ -41,8 +41,8 @@ public class Grid {
         return c;
     }
 
-    public void add(Block block) {
-        block.getCells().stream().filter(cell -> cell.getY() > -1).forEach(this::add);
+    void add(BlockInstance block) {
+        block.cells().filter(cell -> cell.getY() > -1).forEach(this::add);
     }
 
     private void add(Cell cell) {
@@ -50,8 +50,8 @@ public class Grid {
         grid[cell.getY()][cell.getX()] = cell;
     }
 
-    public void remove(Block block) {
-        block.getCells().stream().filter(cell -> cell.getY() > -1).forEach(this::remove);
+    void remove(BlockInstance block) {
+        block.cells().filter(cell -> cell.getY() > -1).forEach(this::remove);
     }
 
     private void remove(Cell cell) {

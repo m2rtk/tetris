@@ -1,61 +1,60 @@
-package eu.m2rt.tetris.logic.blocks;
+package eu.m2rt.tetris.logic;
 
 public class Cell {
+    public final Block block;
+    private final Grid grid;
+
     private int x, y;
     private boolean alive;
-    private int value;
 
-    public Cell(int x, int y, int value) {
+    Cell(Grid grid, Block block, int x, int y) {
+        this.grid = grid;
+        this.block = block;
         this.x = x;
         this.y = y;
-        this.value = value;
         this.alive = true;
     }
 
-    public boolean isAlive() {
+    boolean isAlive() {
         return alive;
     }
 
-    public void kill() {
+    void kill() {
         this.alive = false;
     }
 
-    public int getX() {
+    int getX() {
         return x;
     }
 
-    public int getY() {
+    int getY() {
         return y;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public boolean canMoveDown(Grid grid) {
+    boolean canMoveDown() {
         if (y < 0) return true;
         return (y + 1 < grid.getHeight()) && (grid.get(x, y + 1) == null || grid.get(x, y + 1).alive);
     }
 
-    public void moveDown() {
+    void moveDown() {
         y++;
     }
 
-    public boolean canMoveLeft(Grid grid) {
+    boolean canMoveLeft() {
         if (y < 0) return true;
         return x > 0 && (grid.get(x - 1, y) == null || grid.get(x - 1, y).alive);
     }
 
-    public void moveLeft() {
+    void moveLeft() {
         x--;
     }
 
-    public boolean canMoveRight(Grid grid) {
+    boolean canMoveRight() {
         if (y < 0) return true;
         return x + 1 < grid.getWidth() && (grid.get(x + 1, y) == null || grid.get(x + 1, y).alive);
     }
 
-    public void moveRight() {
+    void moveRight() {
         x++;
     }
 
